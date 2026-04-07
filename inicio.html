@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Inicio</title>
+    <!-- Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login">
+
+    <main class="contenedor-principal">
+            
+        <!--Recuadro:-->
+        <section class="card-login">
+            <!--Titulo:-->
+            <header class="header-login">
+                <div class="logo-box">
+                    <span class="material-symbols-outlined icono-logo">ink_pen</span>
+                </div>
+                <h1 class="titulo">TattooPro Connect</h1>
+                <p class="subtitulo">EL ARTE EN LA PIEL</p>
+            </header>
+
+            <!--FormularioLogin:-->
+            <form class="space-y-6" action="dashboard.html">
+
+                <!--Correo:-->
+                <div>
+                    <label class="label">Correo</label>
+                    <div class="input-group">
+                        <span class="material-symbols-outlined icono">mail</span>
+                        <input type="email" placeholder="correo@electronico.co">
+                    </div>
+                </div> 
+
+                <!--Contraseña:-->
+                <div>
+                    <label class="label">Contraseña</label>
+                    <div class="input-group">
+                        <span class="material-symbols-outlined icono">lock</span>
+                        <input type="password" placeholder="••••••••">
+                    </div>
+                </div>
+
+                <!--Boton:-->
+                <button class="btn-login" type="submit">
+                    Ingresar
+                </button>
+            </form>
+
+            <div class="footer-login">
+                <p>
+                    ¿No tienes cuenta?
+                    <a href="registro.html">Crear cuenta</a>
+                </p>
+            </div>
+        </section>
+        
+    <!--JS:-->
+    </main>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const correo = document.querySelector('input[type="email"]').value;
+            const password = document.querySelector('input[type="password"]').value;
+
+            let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+            const usuario = usuarios.find(u => u.correo === correo && u.password === password);
+
+            if (usuario) {
+                localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
+                alert("Bienvenido " + usuario.nombre + " 🔥");
+                window.location.href = "dashboard.html";
+
+            } else {
+                alert("Correo o contraseña incorrectos ❌");
+            }
+        });
+    </script>
+</body>
+</html>

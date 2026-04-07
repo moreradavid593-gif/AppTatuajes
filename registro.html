@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Registro</title>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="registro">
+
+  <main class="contenedor-principal">
+        
+    <!--Recuadro:-->
+    <section class="card-login">
+    <!--Titulo:-->
+      <header class="header-login">
+        <div class="logo-box">
+          <span class="material-symbols-outlined icono-logo">ink_pen</span>
+        </div>
+        <h1 class="titulo">TattooPro Connect</h1>
+        <p class="subtitulo">Crea tu cuenta</p>
+      </header>
+
+      <!--FormularioRegistro:-->
+      <form class="formulario">
+
+        <!--Nombre:-->
+        <div class="campo">
+          <label>NOMBRE</label>
+          <input type="text" placeholder="Tu nombre completo">
+        </div>
+
+        <!--Correo:-->
+        <div class="campo">
+          <label>CORREO ELECTRONICO</label>
+          <input type="email" placeholder="ejemplo@tattoopro.com">
+        </div>
+
+        <!--Contraseña:-->
+        <div class="campo">
+          <label>CONTRASEÑA</label>
+          <input type="password" placeholder="••••••••">
+        </div>
+        
+        <!--Eleccion:-->
+        <div>
+          <label class="label">TIPO DE USUARIO</label>
+          <div class="grid">
+            <label class="radio">
+              <input type="radio" name="tipo_usuario" checked>
+              <span>Cliente</span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="tipo_usuario">
+              <span>Tatuador</span>
+            </label>
+          </div>
+        </div>
+        <button class="btn">Registrarse</button>
+      </form>
+
+      <div class="footer-login">
+        <p>
+          ¿Ya tienes una cuenta?
+          <a href="inicio.html">Ya tengo cuenta</a>
+        </p>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>
+        Al registrarte, aceptas nuestros <br>
+        <a href="#">Términos</a> y <a href="#">Privacidad</a>
+      </p>
+    </footer>
+
+    <!--JS:-->
+  </main>
+
+  <script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const nombre = document.querySelector('input[type="text"]').value;
+      const correo = document.querySelector('input[type="email"]').value;
+      const password = document.querySelector('input[type="password"]').value;
+      const tipo = document.querySelector('input[name="tipo_usuario"]:checked').nextElementSibling.textContent;
+
+      let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+      const existe = usuarios.find(u => u.correo === correo);
+
+      if (existe) {
+        alert("Este correo ya está registrado");
+        return;
+      }
+
+      const nuevoUsuario = {
+        nombre,
+        correo,
+        password,
+        tipo
+      };
+
+      usuarios.push(nuevoUsuario);
+
+      localStorage.setItem("usuarios", JSON.stringify(usuarios));
+
+      alert("Registro exitoso 🔥");
+
+      window.location.href = "inicio.html";
+    });
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Citas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <h2 class="logo">TattooPro</h2>
+            <p class="sub">EL ARTE EN LA PIEL.</p>
+            <nav class="side-menu">
+                <a href="dashboard.html">Inicio</a>
+                <a href="agenda.html">Agenda</a>
+                <a href="#" class="active">Citas</a>
+                <a href="perfil.html">Perfil</a>
+            </nav>
+
+        </aside>
+
+        <!-- CONTENIDO -->
+        <div class="content">
+
+            <!-- NAVBAR SUPERIOR -->
+            <header class="topbar">
+                <span class="logo">TattooPro Connect</span>
+                <nav class="menu">
+                    <a href="dashboard.html">Inicio</a>
+                    <a href="agenda.html">Agenda</a>
+                    <a href="#" class="active">Citas</a>
+                    <a href="#">Perfil</a>
+                </nav>
+            </header>
+
+        <main class="main">
+
+            <h1 class="titulo">Citas Agendadas</h1>
+            <p class="subtitulo">Lista de citas registradas</p>
+            <section id="listaCitas" class="lista"></section>
+
+        </main>
+
+        <script>
+            
+            //Carga y trae las citas guardadas:
+            function cargarCitas() {
+            const contenedor = document.getElementById("listaCitas");
+            contenedor.innerHTML = "";
+            let citas = JSON.parse(localStorage.getItem("citas")) || [];
+            
+            //SI NO HAY CITAS:
+            if (citas.length === 0) {
+                contenedor.innerHTML = "<p style='color:gray'>No hay citas registradas</p>";
+                return;
+            }
+            
+            //Revisa las citas
+            citas.forEach((cita, index) => {
+            
+            //Crea tarjeta
+            const card = document.createElement("div");
+            card.classList.add("cita-card");
+            card.innerHTML = `
+            <h3>${cita.cliente}</h3>
+            <p>📅 ${cita.fecha}</p>
+            <p>⏰ ${cita.hora}</p>
+            <button onclick="eliminarCita(${index})">Eliminar</button>`;
+            contenedor.appendChild(card);
+            });
+            }
+            
+            //Elimina cita
+            function eliminarCita(index) {
+            let citas = JSON.parse(localStorage.getItem("citas")) || [];
+            citas.splice(index, 1);
+            localStorage.setItem("citas", JSON.stringify(citas));
+            cargarCitas();
+            }
+
+            //Actualiza pagina
+            cargarCitas();
+
+        </script>
+</body>
+</html>
