@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Perfil</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- MENU IZQUIERDA SIDEBAR -->
+        <aside class="sidebar">
+            <h2 class="logo">TattooPro</h2>
+            <p class="sub">EL ARTE EN LA PIEL.</p>
+            <nav class="side-menu">
+                <a href="dashboard.html">Inicio</a>
+                <a href="agenda.html">Agenda</a>
+                <a href="citas.html">Citas</a>
+                <a class="active">Perfil</a>
+            </nav>
+        </aside>
+
+        <!-- CONTENIDO -->
+        <div class="content">
+
+            <!-- MENU ARRIBA NAVBAR -->
+            <header class="topbar">
+                <span class="logo">TattooPro Connect</span>
+                <nav class="menu">
+                    <a href="dashboard.html">Inicio</a>
+                    <a href="agenda.html">Agenda</a>
+                    <a href="citas.html">Citas</a>
+                    <a class="active">Perfil</a>
+                </nav>
+            </header>
+
+            <main class="main perfil">
+
+                <!-- ENCABEZADOPERFIL -->
+                <div class="perfil-header">
+                    <img src="Imagenes/perfil.jpeg" class="perfil-img">
+                    <div>
+                        <h2 id="nombreUsuario">Nombre</h2>
+                        <p id="tipoUsuario">Tipo usuario</p>
+                        <p class="bio">Tatuador profesional | Realismo | Blackwork</p>
+                        <div class="stats">
+                            <span>🔥 0 Likes</span>
+                            <span>👥 0 Seguidores</span>
+                            <span>🖋️ 0 Trabajos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- GALERÍA -->
+                <div class="galeria">
+                    <img src="#" alt="Imagen">
+                    <img src="#" alt="Imagen">
+                </div>
+
+                <button onclick="logout()">Cerrar sesión</button>
+            </main>
+        </div>
+    </div>
+
+    <!-- NOMBRE;-->
+    <script>
+        const usuario = JSON.parse(localStorage.getItem("usuarioActivo"));
+
+        if (usuario) {
+            document.getElementById("nombreUsuario").textContent = usuario.nombre;
+        }
+
+        function logout() {
+        localStorage.removeItem("usuarioActivo");
+        window.location.href = "inicio.html";
+        }
+    </script>
+
+</body>
+</html>

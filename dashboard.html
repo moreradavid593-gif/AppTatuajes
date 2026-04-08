@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- MENU IZQUIERDA SIDEBAR -->
+  <aside class="sidebar">
+    <h2 class="logo">TattooPro</h2>
+    <p class="sub">EL ARTE EN LA PIEL.</p>
+    <nav class="side-menu">
+      <a class="active">Inicio</a>
+      <a href="agenda.html">Agenda</a>
+      <a href="citas.html">Citas</a>
+      <a href="perfil.html">Perfil</a>
+    </nav>
+  </aside>
+
+  <!-- CONTENIDO -->
+  <div class="content">
+
+    <!-- MENU ARRIBA NAVBAR -->
+    <header class="topbar">
+      <span class="logo">TattooPro Connect</span>
+      <nav class="menu">
+        <a href="#" class="active">Inicio</a>
+        <a href="agenda.html">Agenda</a>
+        <a href="citas.html">Citas</a>
+        <a href="perfil.html">Perfil</a>
+      </nav>
+    </header>
+
+    <!-- BIENVENIDA -->
+    <section class="hero">
+      <h1>¡Bienvenido De Nuevo!</h1>
+      <!--Citas:-->
+      <div class="stats">
+        <div class="card">Citas: <span id="totalCitas"></span></div>
+      </div>
+      <script>
+        const citas = JSON.parse(localStorage.getItem("citas")) || [];
+        document.getElementById("totalCitas").textContent = citas.length
+      </script>
+    </section>
+
+    <!--IA-->
+    <div class="card">
+    <h3>✨ Generador de ideas con IA</h3>
+
+    <input type="text" id="promptIA" placeholder="Ej: tatuaje de dragón">
+
+    <button onclick="generarIA()">Generar</button>
+
+    <p id="respuestaIA"></p>
+
+    </div>
+
+  <div>
+    <!-- POSTS -->
+    <section class="feed">
+
+      <!--POST BRAYAN -->
+      <div class="post">
+        <div class="post-header">
+          <img src="Imagenes/Brayan/BrayanPerfil.jpeg" class="avatar">
+          <a href="perfil1.html" class="user">Brayan Morera</a>
+        </div>
+        <img src="Imagenes/Brayan/Jeantattoo.jpeg" class="post-img">
+        <div class="post-body">
+          <p><strong>Nuevo diseño realista 🖤</strong></p>
+          <p>Trabajo en brazo completo, citas disponibles esta semana.</p>
+          <div class="acciones">
+            <button>❤️ 120</button>
+            <button>👎 5</button>
+            <button>💬 18</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- POST JHONNY -->
+
+      <div class="post">
+        <div class="post-header">
+          <img src="Imagenes/Jhonny/Jhonnyperfil.jpeg" class="avatar">
+          <a href="perfil2.html" class="user">Jhonny Grisales</a>
+        </div>
+        <img src="Imagenes/Jhonny/Jhonnytattoo.jpeg" class="post-img">
+        <div class="post-body">
+          <p><strong>AutoTattoo✨</strong></p>
+          <p>Me dolió, pero más me duele una Colombia corrupta. </p>
+          <div class="acciones">
+            <button>❤️ 10</button>
+            <button>👎 50</button>
+            <button>💬 20</button>
+          </div>
+        </div>
+        
+      </div>
+      <Footer><P>MAS PROXIMAMENTE</P></Footer>
+    </section>
+  </div>
+
+  <!--IA-->
+  <script>
+  async function generarIA() {
+  const prompt = document.getElementById("promptIA").value;
+  if (!prompt) {
+    alert("Escribe algo primero");
+    return;
+  }
+  const API_KEY = "AIzaSyC_31RP02jznR6zrmuwiSMNOoYTmmwTu4M";
+  try {
+    document.getElementById("respuestaIA").textContent = "Pensando... 🤔";
+    const response = await fetch(
+      `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          contents: [
+            {
+              parts: [
+                { text: "Eres un tatuador profesional. Dame una idea de tatuaje: " + prompt }
+              ]
+            }
+          ]
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    if (data.error) {
+      document.getElementById("respuestaIA").textContent =
+        "Error: " + data.error.message;
+      return;
+    }
+    const texto = data.candidates?.[0]?.content?.parts?.[0]?.text;
+    document.getElementById("respuestaIA").textContent =
+      texto || "No hubo respuesta 😢";
+  } catch (error) {
+    console.error(error);
+    document.getElementById("respuestaIA").textContent =
+      "Error de conexión 😢";
+  }}
+</script>
+</body>
+</html>
